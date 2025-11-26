@@ -1,0 +1,632 @@
+:root {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --bg: #f5f7fb;
+  --card: #ffffff;
+  --primary: #2a63f2;
+  --secondary: #f0f3ff;
+  --border: #e0e5f2;
+  --text: #122044;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+.login-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f1730, #2040a3);
+  padding: 2rem;
+}
+
+.login-card {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 2.5rem;
+  width: min(400px, 100%);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.date-item { display:flex; flex-direction:column; gap:6px; }
+.date-display { color: #4c5676; font-weight:600; margin-top:4px; }
+.date-display small { color:#7c8ab5; font-weight:600; margin-right:6px; }
+
+
+.login-card h1 {
+  margin-bottom: 0;
+}
+
+.login-sub {
+  margin-top: -0.75rem;
+  color: #4a5578;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-weight: 600;
+}
+
+.password-input {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.password-input input {
+  flex: 1;
+}
+
+.password-toggle {
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--border);
+  background: #f0f3ff;
+  color: var(--primary);
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.password-eye {
+  width: 24px;
+  height: 14px;
+  border: 2px solid var(--primary);
+  border-radius: 50%/60%;
+  position: relative;
+  display: block;
+}
+
+.password-eye::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--primary);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.password-eye::before {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 20px;
+  background: var(--primary);
+  top: -3px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.password-toggle.revealed .password-eye::before {
+  opacity: 1;
+}
+
+input,
+select,
+button {
+  font: inherit;
+}
+
+input,
+select {
+  padding: 0.75rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #fdfdff;
+}
+
+select:disabled {
+  background: #f3f4f8;
+  color: #8b93b7;
+  cursor: not-allowed;
+}
+
+button {
+  border: none;
+  border-radius: 10px;
+  padding: 0.9rem 1.5rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+.secondary {
+  background: #fff;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+}
+
+.error {
+  color: #b30000;
+  margin: 0;
+}
+
+.hint {
+  color: #6a7599;
+  font-size: 0.85rem;
+  margin-top: -0.5rem;
+}
+
+.sidebar {
+  width: 240px;
+  background: #0f1b3d;
+  color: #fff;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.brand h2 {
+  margin: 0;
+}
+
+.brand p {
+  margin: 0.2rem 0 0;
+  color: #7c8ab5;
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nav-link {
+  background: transparent;
+  color: #c7d3ff;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  text-align: left;
+}
+
+.nav-link.active {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+.content {
+  flex: 1;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.dashboard-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.control-group,
+.date-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 220px;
+  flex: 1;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.flow-card h2 {
+  margin: 0;
+}
+
+.flow-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.flow-row div h3 {
+  margin: 0.25rem 0 0;
+  font-size: 1.8rem;
+  color: var(--primary);
+}
+
+.flow-row div p {
+  margin: 0;
+  color: #4d5780;
+}
+
+.flow-note {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #6a7599;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--card);
+  border-radius: 16px;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 8px 20px rgba(15, 25, 61, 0.08);
+}
+
+.welcome {
+  margin: 0;
+  font-weight: 600;
+  color: #1d2750;
+}
+
+.role-chip {
+  display: inline-block;
+  margin-top: 0.3rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  font-size: 0.8rem;
+  color: #4c5676;
+}
+
+.panel {
+  display: none;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.panel.visible {
+  display: flex;
+}
+
+header h1 {
+  margin: 0;
+}
+
+header p {
+  margin: 0.4rem 0 0;
+  color: #4c5676;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 25px rgba(15, 25, 61, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+label span {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #4c5676;
+  margin-bottom: 0.3rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.85rem;
+  border-bottom: 1px solid var(--border);
+}
+
+th {
+  color: #4d5780;
+  font-weight: 600;
+}
+
+.filters {
+  flex-direction: row;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.filters label {
+  min-width: 180px;
+  flex: 1;
+}
+
+/* new layout: filters-row places country & city side-by-side */
+.filters .filters-row {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.country-filter {
+  min-width: 900px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.city-filter {
+  min-width: 300px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* keep native select hidden visually; script toggles display none */
+#city-filter {
+  display: block;
+    position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* multi-select wrapper (injected) */
+.tx-city-multiselect {
+  margin-top: 8px;
+}
+
+/* trigger */
+.tx-city-trigger,
+.multi-select-trigger {
+  border: 1px solid var(--border);
+  background: #fdfdff;
+  border-radius: 10px;
+  padding: 0.65rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  min-width: 220px;
+  text-align: left;
+}
+
+.tx-city-trigger.disabled,
+.tx-city-trigger[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* menu */
+#tx-city-menu,
+.multi-select-menu {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  left: 0;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  padding: 0.5rem;
+  width: 260px;
+  z-index: 100;
+}
+
+/* options */
+.multi-select-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem;
+  font-size: 0.95rem;
+}
+
+/* chips */
+.city-chips {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.city-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 16px;
+  background: #eef2f6;
+  color: #122044;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.city-chip .chip-close {
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* view button */
+.tx-view-btn {
+  background: #f6f7f9;
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+/* transactions table wrapper inside the filters card */
+.transactions-table-wrapper {
+  margin-top: 14px;
+  padding: 0; /* table card inherits padding already so keep tight */
+  box-shadow: none;
+  background: transparent;
+}
+
+/* overlay */
+.l1-overlay-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(12, 18, 30, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+}
+
+.l1-overlay-panel {
+  width: 30%;
+  max-width: 700px;
+  min-width: 300px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(15, 25, 45, 0.28);
+  padding: 20px;
+  position: relative;
+}
+
+.l1-overlay-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #f3f5f8;
+  border: none;
+  border-radius: 6px;
+  font-size: 20px;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+}
+
+.l1-overlay-content {
+  margin-top: 8px;
+  color: #0f1724;
+  line-height: 1.45;
+  white-space: normal;
+}
+
+/* responsive */
+@media (max-width: 1000px) {
+  .filters .filters-row {
+    flex-direction: column;
+     display: flex;
+            justify-content: space-between;
+
+  }
+  .transactions-table-wrapper {
+    margin-top: 12px;
+  }
+  .l1-overlay-panel {
+    width: 90%;
+  }
+}
+
+.pill-group {
+  display: flex;
+  gap: 10px;         /* <-- added space between country buttons */
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.pill-group .pill,
+.pill {
+  background: transparent;
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  color: #223;
+  font-weight: 700;
+}
+
+/* active pill */
+.pill.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+.small {
+  padding: 0.45rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+/* wrapper so we can overlay our visual text on the native input */
+.date-picker-wrap {
+  position: relative;
+  display: inline-block;
+  width: 220px;                /* adjust to match other inputs */
+}
+
+/* keep native picker present but visually invisible (still interactive) */
+.date-picker-wrap input[type="date"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 2;
+  cursor: pointer;
+}
+
+/* the visible formatted date shown to users */
+.date-visual {
+  display: inline-block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.75rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #fdfdff;
+  color: #223;
+  font-weight: 700;
+  text-align: left;
+  min-height: 44px;
+  line-height: 1.2;
+  z-index: 1;
+  cursor: pointer;
+}
+
+/* when empty */
+.date-visual.empty {
+  color: #7c8ab5;
+  font-weight: 600;
+}

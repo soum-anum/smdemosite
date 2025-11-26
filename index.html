@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SOM Bank Console</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="login-screen" class="login-screen">
+      <form id="login-form" class="login-card">
+        <h1>SOM Finserve</h1>
+        <p class="login-sub">Secure business console</p>
+        <label class="field">
+          <span>Username</span>
+          <input type="text" id="login-username" placeholder="Enter username" required />
+        </label>
+        <label class="field password-field">
+          <span>Password</span>
+          <div class="password-input">
+            <input type="password" id="login-password" placeholder="Enter password" required />
+            <button
+              type="button"
+              id="toggle-password"
+              class="password-toggle"
+              aria-label="Show password"
+            >
+              <span class="password-eye"></span>
+            </button>
+          </div>
+        </label>
+        <button type="submit" class="primary">Login</button>
+        <p id="login-error" class="error hidden">Invalid credentials</p>
+        <p class="hint">
+          User: smadmin / smcust
+          Password: Smbank@1234
+        </p>
+      </form>
+    </div>
+
+    <div id="app" class="app hidden">
+      <aside class="sidebar">
+        <div class="brand">
+          <h2>SOM Bank</h2>
+          <p>Business Suite</p>
+        </div>
+        <nav>
+          <button class="nav-link active" data-target="dashboard">Dashboard</button>
+          <button class="nav-link" data-target="transactions">Transactions</button>
+          <button class="nav-link" data-target="paynow">Paynow</button>
+          <button class="nav-link" data-target="statements">Statements</button>
+          <button class="nav-link" data-target="profile">Profile</button>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <div class="topbar">
+          <div>
+            <p class="welcome" id="welcome-text">Signed in as -</p>
+            <span class="role-chip" id="role-chip"></span>
+          </div>
+          <button id="logout-button" type="button" class="secondary">Logout</button>
+        </div>
+
+        <section id="dashboard" class="panel visible">
+          <header>
+            <h1>Cash Flow Dashboard</h1>
+            <p>Monitor daily and monthly movements in near real-time.</p>
+          </header>
+
+          <div class="dashboard-grid">
+            <div class="card flow-card">
+              <h2>Daily Cash Flow</h2>
+              <div class="flow-row">
+                <div>
+                  <p>Cash Inflow</p>
+                  <h3 id="daily-inflow">$0.00</h3>
+                </div>
+                <div>
+                  <p>Cash Outflow</p>
+                  <h3 id="daily-outflow">$0.00</h3>
+                </div>
+              </div>
+              <p class="flow-note">Based on the most recent date in the filtered range.</p>
+            </div>
+            <div class="card flow-card">
+              <h2>Monthly Cash Flow</h2>
+              <div class="flow-row">
+                <div>
+                  <p>Cash Inflow</p>
+                  <h3 id="monthly-inflow">$0.00</h3>
+                </div>
+                <div>
+                  <p>Cash Outflow</p>
+                  <h3 id="monthly-outflow">$0.00</h3>
+                </div>
+              </div>
+              <p class="flow-note">Aggregated across the selected date span.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="transactions" class="panel">
+          <header>
+            <h1>Transactions</h1>
+            <p>Track payments processed across Asia.</p>
+          </header>
+
+          <!-- Filters card: Country + Date side-by-side -->
+<!-- Filters card: Country + single Date picker -->
+<div class="filters card">
+  <div class="filters-row">
+    <div class="country-filter">
+      <span>Country</span>
+      <div id="country-buttons" class="pill-group"></div>
+    </div>
+
+    <div class="date-filter">
+      <span>Date</span>
+      <div class="date-row">
+        <div class="date-item">
+          <input type="date" id="tx-date" />
+        </div>
+      </div>
+      <div class="date-actions">
+        <button type="button" id="tx-clear-date" class="secondary small">Clear</button>
+        <button type="button" id="tx-apply-date" class="primary small">Apply</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+          <!-- Transactions table now sits below the filters inside the same card block -->
+          <div class="card transactions-table-wrapper">
+            <div class="table-meta">
+              <span id="tx-results-count"></span>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Transaction ID</th>
+                  <th>Date</th>
+                  <th>Country</th>
+                  <th>City</th>
+                  <th>Amount (Local)</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="transactions-body"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="paynow" class="panel">
+          <header>
+            <h1>Paynow</h1>
+            <p>Accept and refund customer payments instantly.</p>
+          </header>
+          <div class="card-grid">
+            <form id="accept-payment" class="card">
+              <h2>Accept Payment</h2>
+              <label>
+                <span>Payer Name</span>
+                <input type="text" name="payer" required />
+              </label>
+              <label>
+                <span>Country</span>
+                <select id="paynow-country" name="paynowCountry" required></select>
+              </label>
+              <!-- city dropdown removed -->
+              <label>
+                <span id="paynow-amount-label">Amount (Select Country)</span>
+                <input type="number" min="1" step="0.01" name="amount" id="paynow-amount" required disabled />
+              </label>
+              <label>
+                <span>Reference</span>
+                <input type="text" name="reference" required />
+              </label>
+              <button type="submit" class="primary">Capture Payment</button>
+              <p class="form-note" id="accept-status"></p>
+            </form>
+
+            <form id="refund-payment" class="card">
+              <h2>Refund Payment</h2>
+              <label>
+                <span>Transaction ID</span>
+                <input type="text" name="transaction" required />
+              </label>
+              <label>
+                <span>Country</span>
+                <select id="refund-country" name="refundCountry" required></select>
+              </label>
+              <!-- city dropdown removed -->
+              <label>
+                <span id="refund-amount-label">Refund Amount (Select Country)</span>
+                <input type="number" min="1" step="0.01" name="refundAmount" id="refund-amount" required disabled />
+              </label>
+              <label>
+                <span>Reason</span>
+                <input type="text" name="reason" />
+              </label>
+              <button type="submit" class="secondary">Issue Refund</button>
+              <p class="form-note" id="refund-status"></p>
+            </form>
+          </div>
+        </section>
+
+        <section id="statements" class="panel">
+          <header>
+            <h1>Account Statements</h1>
+            <p>Latest balances derived from treasury accounts.</p>
+          </header>
+          <div class="card">
+            <table>
+              <thead>
+                <tr>
+                  <th>Account</th>
+                  <th>Statement Date</th>
+                  <th>Starting Balance</th>
+                  <th>Credits</th>
+                  <th>Debits</th>
+                  <th>Ending Balance</th>
+                </tr>
+              </thead>
+              <tbody id="statements-body"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="profile" class="panel">
+          <header>
+            <h1>Business Profile</h1>
+            <p>Snapshot of SOM Retail Holdings' treasury setup.</p>
+          </header>
+          <div class="card profile">
+            <div>
+              <h3>Entity</h3>
+              <ul>
+                <li>Registered Name: SOM Retail Holdings Pte Ltd</li>
+                <li>UEN: 202220990N</li>
+                <li>Industry: Cross-border eCommerce Enablement</li>
+                <li>Operating HQ: Singapore</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Team & Contacts</h3>
+              <ul>
+                <li>Finance Lead: Prisha Menon</li>
+                <li>Operations Lead: Hideo Nakamura</li>
+                <li>Compliance: Farah Iqbal</li>
+                <li>Support: treasury@sombank.com</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Limits & Licenses</h3>
+              <ul>
+                <li>Daily Payment Limit: USD 1.5M</li>
+                <li>Refund SLA: 2 business days</li>
+                <li>Compliance Status: Green (Apr 2024 audit)</li>
+                <li>License Scope: APAC digital payments</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
